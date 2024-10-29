@@ -17,3 +17,142 @@ record(bo, "$(P)DISABLE")
     field(ZNAM, "COMMS ENABLED")
     field(ONAM, "COMMS DISABLED")
 }
+
+################################################################################
+# Controller Version
+#
+#% archiver 10 Monitor
+#% controldesk Controller Version readback
+record(stringin, "$(P)ID")
+{
+    field(DESC, "Controller Version")
+    field(DTYP, "stream")
+    field(INP,  "@thorlabsfw102c.proto getId() $(PORT)")
+    field(SDIS, "$(P)DISABLE")
+    field(SCAN, "10 second")
+}
+
+record(mbbo, "$(P)POSITION:SP")
+{
+    field(DESC, "Set Filter position")
+    field(DTYP, "stream")
+    field(OUT,  "@thorlabsfw102c.proto setPosition() $(PORT)")
+    field(ZRVL, "0")
+    field(ZRST, "Filter 1")
+    field(ONVL, "1")
+    field(ONST, "Filter 2")
+    field(ZRVL, "2")
+    field(ZRST, "Filter 3")
+    field(ONVL, "3")
+    field(ONST, "Filter 4")
+    field(ZRVL, "4")
+    field(ZRST, "Filter 5")
+    field(ONVL, "5")
+    field(ONST, "Filter 6")
+    field(SDIS, "$(P)DISABLE")
+    field(SCAN, "2 second")
+    info(archive, "VAL")
+}
+
+record(mbbi, "$(P)POSITION")
+{
+    field(DESC, "Filter position")
+    field(DTYP, "stream")
+    field(INP,  "@thorlabsfw102c.proto getPosition() $(PORT)")
+    field(ZRVL, "0")
+    field(ZRST, "Filter 1")
+    field(ONVL, "1")
+    field(ONST, "Filter 2")
+    field(ZRVL, "2")
+    field(ZRST, "Filter 3")
+    field(ONVL, "3")
+    field(ONST, "Filter 4")
+    field(ZRVL, "4")
+    field(ZRST, "Filter 5")
+    field(ONVL, "5")
+    field(ONST, "Filter 6")
+    field(SDIS, "$(P)DISABLE")
+    field(SCAN, "2 second")
+    info(archive, "VAL")
+}
+
+record(mbbi, "$(P)TRIGGERMODE")
+{
+    field(DESC, "Trigger Mode")
+    field(DTYP, "stream")
+    field(INP,  "@thorlabsfw102c.proto getTriggerMode() $(PORT)")
+    field(ZRVL, "0")
+    field(ZRST, "INPUT")
+    field(ZRSV, "NO_ALARM")
+    field(ONVL, "1")
+    field(ONST, "OUTPUT")
+    field(ONSV, "NO_ALARM")
+    field(SDIS, "$(P)DISABLE")
+    field(SCAN, "2 second")
+}
+
+record(mbbo, "$(P)TRIGGERMODE:SP")
+{
+    field(DESC, "Set Trigger Mode")
+    field(DTYP, "stream")
+    field(OUT,  "@thorlabsfw102c.proto setTriggerMode() $(PORT)")
+    field(ZRVL, "0")
+    field(ZRST, "INPUT")
+    field(ONVL, "1")
+    field(ONST, "OUTPUT")
+    field(ONSV, "NO_ALARM")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(mbbi, "$(P)SPEEDMODE")
+{
+    field(DESC, "Speed Mode")
+    field(DTYP, "stream")
+    field(INP,  "@thorlabsfw102c.proto getSpeedMode() $(PORT)")
+    field(ZRVL, "0")
+    field(ZRST, "SLOW")
+    field(ZRSV, "NO_ALARM")
+    field(ONVL, "1")
+    field(ONST, "FAST")
+    field(SDIS, "$(P)DISABLE")
+    field(SCAN, "2 second")
+}
+
+record(mbbo, "$(P)SPEEDMODE:SP")
+{
+    field(DESC, "Set Speed Mode")
+    field(DTYP, "stream")
+    field(OUT,  "@thorlabsfw102c.proto setSpeedMode() $(PORT)")
+    field(ZRVL, "0")
+    field(ZRST, "SLOW")
+    field(ONVL, "1")
+    field(ONST, "FAST")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(mbbi, "$(P)SENSORMODE")
+{
+    field(DESC, "Sensor Mode")
+    field(DTYP, "stream")
+    field(INP,  "@thorlabsfw102c.proto getSpeedMode() $(PORT)")
+    field(ZRVL, "0")
+    field(ZRST, "OFF")
+    field(ZRSV, "NO_ALARM")
+    field(ONVL, "1")
+    field(ONST, "ACTIVE")
+    field(SDIS, "$(P)DISABLE")
+    field(SCAN, "2 second")
+}
+
+record(mbbo, "$(P)SENSORMODE:SP")
+{
+    field(DESC, "Set Sensor Mode")
+    field(DTYP, "stream")
+    field(OUT,  "@thorlabsfw102c.proto setSpeedMode() $(PORT)")
+    field(ZRVL, "0")
+    field(ZRST, "OFF")
+    field(ONVL, "1")
+    field(ONST, "ACTIVE")
+    field(SDIS, "$(P)DISABLE")
+}
+
