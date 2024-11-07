@@ -1,8 +1,6 @@
 # Stream Device Protocol for the Thorlabs Filter Wheel Controller.
 # This protocol uses features defined in Stream Device Version 2
 #
-# Ian Gillingham - October 2024
-#
 # Commands and queries from Thorlabs FW102C User Guide - Rev M, October 4, 2023
 #
 # Command               Syntax      Description
@@ -27,57 +25,64 @@
 # Save Settings         save        This will save all the settings as default on power up
 #
 # Notes:
-#   Default framing is 115.2 kbaud, 8 data bits, 1 stop bit, no parity, no flow control.
+#   - Default framing is 115.2 kbaud, 8 data bits, 1 stop bit, no parity, no flow control.
 # 
-# The prompt symbol ">" will appear on power-up and after a command is accepted by the FW102C and indicates
-# that the FW102C is ready to receive another command line.
+#   - The prompt symbol ">" will appear on power-up and after a command is accepted by the
+#   FW102C and indicates that the FW102C is ready to receive another command line.
 # 
-# The FW02C is a 6 position filter wheel
+#   - The FW02C is a 6 position filter wheel
 #
 
 locktimeout = 5000;
 terminator     = CR;
-interminator   = CR;
-outterminator  = CR;
 replytimeout = 4000;
 readtimeout  = 2000;
-extrainput   = Ignore;
+
+#
+# NOTE: Each read returns the sent query string, too. This is why the
+#       input commands need to handle multi line input from the device.
+#
 
 getId {
     out "*idn?";
+    in "*idn?";
     in "%s";
 }
 
 setPosition {
-    out "posn=%d";
-    in ""
+    out "pos=%d";
+    in "pos=%*d";
 }
 getPosition {
     out "pos?";
+    in "pos?";
     in "%d";
 }
 setTriggerMode {
     out "trig=%d";
-    in ""
+    in "trig=%*d";
 }
 getTriggerMode {
     out "trig?";
+    in "trig?";
     in "%d";
 }
 setSpeedMode {
     out "speed=%d";
-    in ""
+    in "speed=%*d";
 }
 getSpeedMode {
     out "speed?";
+    in "speed?";
     in "%d";
 }
 setSensorMode {
     out "sensors=%d";
-    in ""
+    in "sensors=%*d";
 }
 getSensorMode {
     out "sensors?";
+    in "sensors?";
     in "%d";
 }
 
