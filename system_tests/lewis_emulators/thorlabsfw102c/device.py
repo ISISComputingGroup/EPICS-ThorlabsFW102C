@@ -71,13 +71,7 @@ class SimulatedThorlabsfw102C(StateMachineDevice):
     
     @trigger_mode.setter
     def trigger_mode(self, new_mode: TriggerMode) -> None:
-        prev_mode = self._trigger_mode
-        # It's vaguely possible that the new_mode value may not be in the enum list
-        # if not then maintain the old value.
-        try:
-            self._trigger_mode = TriggerMode(new_mode)
-        except IndexError:
-            self._trigger_mode = prev_mode
+        self._trigger_mode = new_mode
 
     @property
     def speed_mode(self) -> SpeedMode:
@@ -85,13 +79,7 @@ class SimulatedThorlabsfw102C(StateMachineDevice):
     
     @speed_mode.setter
     def speed_mode(self, new_mode: SpeedMode) -> None:
-        prev_mode = self._speed_mode
-        # It's vaguely possible that the new_mode value may not be in the enum list
-        # if not then maintain the old value.
-        try:
-            self._speed_mode = SpeedMode(new_mode)
-        except IndexError:
-            self._speed_mode = prev_mode
+        self._speed_mode = new_mode
 
     @property
     def sensor_mode(self) -> SensorMode:
@@ -99,13 +87,6 @@ class SimulatedThorlabsfw102C(StateMachineDevice):
     
     @sensor_mode.setter
     def sensor_mode(self, new_mode: SensorMode) -> None:
-        prev_mode = self._sensor_mode
-        # It's vaguely possible that the new_mode value may not be in the enum list
-        # if not then maintain the old value.
-        try:
-            self._sensor_mode = SensorMode(new_mode)
-        except IndexError:
-            self._sensor_mode = prev_mode
         self._sensor_mode = new_mode
 
 
