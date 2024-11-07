@@ -55,17 +55,15 @@ class Thorlabsfw102CStreamInterface(StreamInterface):
                             else '1')
 
     def set_trigger_mode(self, new_mode: int) -> str:
-        self._device.trigger_mode = new_mode
+        self._device.trigger_mode = TriggerMode(new_mode)
         return f'trig={new_mode}'
 
     def get_speed_mode(self):
-        print(f'stream_interface: Get speed mode: {self._device.speed_mode} => {"SLOW" if self._device.speed_mode == SpeedMode.SLOW else "FAST"}')
         return 'speed?\r' + ('0' if self._device.speed_mode == SpeedMode.SLOW
                              else '1')
 
     def set_speed_mode(self, new_mode: int) -> str:
-        self._device.speed_mode = new_mode
-        print(f'stream_interface: Set speed mode: {self._device.speed_mode}')
+        self._device.speed_mode = SpeedMode(new_mode)
         return f'speed={new_mode}'
 
     def get_sensor_mode(self):
@@ -73,7 +71,7 @@ class Thorlabsfw102CStreamInterface(StreamInterface):
                                else '1')
 
     def set_sensor_mode(self, new_mode: int) -> str:
-        self._device.sensor_mode = new_mode
+        self._device.sensor_mode = SensorMode(new_mode)
         return f'sensors={new_mode}'
 
     def catch_all(self, command):
