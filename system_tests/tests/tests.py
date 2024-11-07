@@ -39,7 +39,7 @@ class Thorlabsfw102CTests(unittest.TestCase):
                                   timeout=5)  # ensure that position actually set.
 
     @skip_if_recsim("In rec sim this test fails")
-    def test_GIVEN_move_THEN_filter_moves_to_position_over_time(self):
+    def test_GIVEN_move_THEN_filter_moves_to_position(self):
         self.ca.set_pv_value(f"{POSITION}:SP", 2)
         self.ca.assert_that_pv_is(f'{POSITION}:SP.RVAL', 2)
         self.ca.assert_that_pv_is_number(f'{POSITION}.RVAL', 2, 0, timeout=5)
@@ -62,3 +62,10 @@ class Thorlabsfw102CTests(unittest.TestCase):
         self.ca.assert_that_pv_is(f'{SPEEDMODE}:SP', 'SLOW')
         self.ca.assert_that_pv_is(f'{SPEEDMODE}', 'SLOW')
 
+    def test_GIVEN_sensor_mode_THEN_mode_is_set(self):
+        self.ca.set_pv_value(f'{SENSORMODE}:SP', 'ACTIVE')
+        self.ca.assert_that_pv_is(f'{SENSORMODE}:SP', 'ACTIVE')
+        self.ca.assert_that_pv_is(f'{SENSORMODE}', 'ACTIVE')
+        self.ca.set_pv_value(f'{SENSORMODE}:SP', 'OFF')
+        self.ca.assert_that_pv_is(f'{SENSORMODE}:SP', 'OFF')
+        self.ca.assert_that_pv_is(f'{SENSORMODE}', 'OFF')
