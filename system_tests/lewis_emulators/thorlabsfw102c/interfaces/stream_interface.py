@@ -13,7 +13,7 @@ class Thorlabsfw102CStreamInterface(StreamInterface):
         super(Thorlabsfw102CStreamInterface, self).__init__()
         # Commands that we expect via serial during normal operation
         self.commands = {
-            CmdBuilder('get_id').escape("*idn?").build(),
+            CmdBuilder(self.get_id).escape("*idn?").eos().build(),
             CmdBuilder(self.get_position).escape("pos?").eos().build(),
             CmdBuilder(self.set_position).escape("pos=").int().build(),
             CmdBuilder(self.get_trigger_mode).escape("trig?").eos().build(),
