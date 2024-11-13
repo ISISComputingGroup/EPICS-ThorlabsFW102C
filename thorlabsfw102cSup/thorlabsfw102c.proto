@@ -46,7 +46,7 @@ readtimeout  = 2000;
 getId {
     out "*idn?";
     in "*idn?";
-    in "%s";
+    in "%#s";
 }
 
 setPosition {
