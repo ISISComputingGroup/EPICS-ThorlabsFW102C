@@ -1,0 +1,88 @@
+# Stream Device Protocol for the Thorlabs Filter Wheel Controller.
+# This protocol uses features defined in Stream Device Version 2
+#
+# Commands and queries from Thorlabs FW102C User Guide - Rev M, October 4, 2023
+#
+# Command               Syntax      Description
+# -------               ------      -----------
+# Get ID                *idn?       Returns the model number and firmware version
+# Set Position          pos=n       Moves the wheel to filter position n
+# Get Position          pos?        Position Query
+# Set Position Count    pcount=n    Sets the wheel type where n is 6 or 12
+# Get Position Count    pcount?     Returns the wheel type
+# Set Trigger Mode      trig=0      Sets the external trigger to the input mode
+#                       trig=1      Sets the external trigger to the output mode
+# Get Trigger Mode      Trig?       Returns the trigger mode
+# Set Speed Mode        speed=0     Sets the move profile to slow speed
+#                       speed=1     Sets the move profile to high speed
+# Get Speed Mode        speed?      Returns the move profile mode
+# Set Sensor Mode       sensors=0   Sensors turn off when wheel is idle to eliminate stray light
+#                       sensors=1   Sensors remain active
+# Get Sensor Mode       sensors?    Returns the sensor mode
+# Set Baud Rate         baud=0      Sets the baud rate to 9600
+#                       baud=1      Sets the baud rate to 115200
+# Get Baud Rate         baud?       Returns the baud rate where 0 = 9600 and 1 = 115200
+# Save Settings         save        This will save all the settings as default on power up
+#
+# Notes:
+#   - Default framing is 115.2 kbaud, 8 data bits, 1 stop bit, no parity, no flow control.
+# 
+#   - The prompt symbol ">" will appear on power-up and after a command is accepted by the
+#   FW102C and indicates that the FW102C is ready to receive another command line.
+# 
+#   - The FW02C is a 6 position filter wheel
+#
+
+locktimeout = 5000;
+terminator     = CR;
+replytimeout = 4000;
+readtimeout  = 2000;
+
+#
+# NOTE: Each read returns the sent query string, too. This is why the
+#       input commands need to handle multi line input from the device.
+#
+
+getId {
+    out "*idn?";
+    in "*idn?";
+    in "%#s";
+}
+
+setPosition {
+    out "pos=%d";
+    in "pos=%*d";
+}
+getPosition {
+    out "pos?";
+    in "pos?";
+    in "%d";
+}
+setTriggerMode {
+    out "trig=%d";
+    in "trig=%*d";
+}
+getTriggerMode {
+    out "trig?";
+    in "trig?";
+    in "%d";
+}
+setSpeedMode {
+    out "speed=%d";
+    in "speed=%*d";
+}
+getSpeedMode {
+    out "speed?";
+    in "speed?";
+    in "%d";
+}
+setSensorMode {
+    out "sensors=%d";
+    in "sensors=%*d";
+}
+getSensorMode {
+    out "sensors?";
+    in "sensors?";
+    in "%d";
+}
+
