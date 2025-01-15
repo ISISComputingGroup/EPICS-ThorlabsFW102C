@@ -34,7 +34,9 @@
 #
 
 locktimeout = 5000;
-terminator     = CR;
+#Terminator     = CR;
+OutTerminator     = CR;
+InTerminator     = "";
 replytimeout = 4000;
 readtimeout  = 2000;
 
@@ -45,44 +47,36 @@ readtimeout  = 2000;
 
 getId {
     out "*idn?";
-    in "*idn?";
-    in "%#s";
+    in "%#s\r> ";
 }
 
 setPosition {
     out "pos=%d";
-    in "pos=%*d";
 }
 getPosition {
     out "pos?";
-    in "pos?";
-    in "%d";
+    in "pos?\r%d\r> ";
 }
 setTriggerMode {
     out "trig=%d";
-    in "trig=%*d";
 }
 getTriggerMode {
     out "trig?";
-    in "trig?";
-    in "%d";
+    in "trig?\r%d\r> ";
 }
 setSpeedMode {
     out "speed=%d";
-    in "speed=%*d";
 }
 getSpeedMode {
     out "speed?";
-    in "speed?";
-    in "%d";
+    in "speed?\r%d\r> ";
+    in "> ";
 }
 setSensorMode {
     out "sensors=%d";
-    in "sensors=%*d";
 }
 getSensorMode {
     out "sensors?";
-    in "sensors?";
-    in "%d";
+    in "sensors?\r%d\r> ";
 }
 
