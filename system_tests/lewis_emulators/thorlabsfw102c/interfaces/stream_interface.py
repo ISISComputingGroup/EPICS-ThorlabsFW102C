@@ -41,38 +41,38 @@ class Thorlabsfw102CStreamInterface(StreamInterface):
         return "TLFW102C_EMULATED"
 
     def get_id(self):
-        return f'*idn?\r{self._device.idn}'
+        return f'*idn?\r{self._device.idn}\r'
 
     def get_position(self):
-        return f'pos?\r{self._device.position}'
+        return f'pos?\r{self._device.position}\r'
 
     def set_position(self, new_position: int) -> str:
         self._device.position = new_position
-        return f'pos={new_position}'
+        return f'pos={new_position}\r'
 
     def get_trigger_mode(self):
         return 'trig?\r' + ('0' if self._device.trigger_mode == TriggerMode.INPUT
-                            else '1')
+                            else '1') +'\r'
 
     def set_trigger_mode(self, new_mode: int) -> str:
         self._device.trigger_mode = TriggerMode(new_mode)
-        return f'trig={new_mode}'
+        return f'trig={new_mode}\r'
 
     def get_speed_mode(self):
         return 'speed?\r' + ('0' if self._device.speed_mode == SpeedMode.SLOW
-                             else '1')
+                             else '1') + '\r'
 
     def set_speed_mode(self, new_mode: int) -> str:
         self._device.speed_mode = SpeedMode(new_mode)
-        return f'speed={new_mode}'
+        return f'speed={new_mode}\r'
 
     def get_sensor_mode(self):
         return 'sensors?\r' + ('0' if self._device.sensor_mode == SensorMode.OFF
-                               else '1')
+                               else '1') + '\r'
 
     def set_sensor_mode(self, new_mode: int) -> str:
         self._device.sensor_mode = SensorMode(new_mode)
-        return f'sensors={new_mode}'
+        return f'sensors={new_mode}\r'
 
     def catch_all(self, command):
         pass
