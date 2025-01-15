@@ -33,56 +33,55 @@
 #   - The FW02C is a 6 position filter wheel
 #
 
-locktimeout = 5000;
-terminator     = CR;
-replytimeout = 4000;
-readtimeout  = 2000;
+
+#
+# Disconnect (and likely auto-reconnect) whenever anything goes wrong.
+#
+@mismatch     { disconnect; }
+@writetimeout { disconnect; }
+@readtimeout  { disconnect; }
+@replyTimeout { disconnect; }
+
+#
+# This is mandatory in order to get responses from the device
+#
+Terminator = CR;
 
 #
 # NOTE: Each read returns the sent query string, too. This is why the
 #       input commands need to handle multi line input from the device.
 #
 
-getId {
-    out "*idn?";
-    in "*idn?";
-    in "%#s";
+#
+# Get a string value, size is passed as second argument
+#
+getString {
+    out "\$1?";
+    in "%#/([> ])//\$1?";
+    in "%\$2[^\r\n]";
+    ExtraInput = Ignore;
 }
 
-setPosition {
-    out "pos=%d";
-    in "pos=%*d";
-}
-getPosition {
-    out "pos?";
-    in "pos?";
+#
+# Get an integer (decimal) value
+# The filter controller finishes all commands by sending a prompt ("> ")
+# which has no CR terminator. We therefore need to consume this, if detected, on the next input.
+# Sometimes the ">" character appears to go AWOL so just end up with a space.
+# The regex substitutes either of these with empty string.
+#
+getD {
+    out "\$1?";
+    in "%#/([> ])//\$1?";
     in "%d";
-}
-setTriggerMode {
-    out "trig=%d";
-    in "trig=%*d";
-}
-getTriggerMode {
-    out "trig?";
-    in "trig?";
-    in "%d";
-}
-setSpeedMode {
-    out "speed=%d";
-    in "speed=%*d";
-}
-getSpeedMode {
-    out "speed?";
-    in "speed?";
-    in "%d";
-}
-setSensorMode {
-    out "sensors=%d";
-    in "sensors=%*d";
-}
-getSensorMode {
-    out "sensors?";
-    in "sensors?";
-    in "%d";
+    ExtraInput = Ignore;
 }
 
+#
+# Set an integer (decimal) value
+# Read back initial value on startup
+#
+setD {
+   #@init { getD(\$1) }
+    out "\$1=%d";
+    ExtraInput = Ignore;
+}
