@@ -33,14 +33,14 @@ class Thorlabsfw102CTests(unittest.TestCase):
     def setUp(self):
         self._lewis, self._ioc = get_running_lewis_and_ioc('thorlabsfw102c', DEVICE_PREFIX)
         self.ca = ChannelAccess(device_prefix=DEVICE_PREFIX)
-        self._lewis.backdoor_set_on_device('position', 0)
+        self._lewis.backdoor_set_on_device('position', 1)
         self.ca.set_pv_value(f'{POSITION}.PROC', 1)
         self.ca.assert_that_pv_is('POSITION', 'Filter 1',
                                   timeout=5)  # ensure that position actually set.
 
     @skip_if_recsim("In rec sim this test fails")
     def test_GIVEN_move_THEN_filter_moves_to_position(self):
-        self.ca.set_pv_value(f"{POSITION}:SP", 2)
+        self.ca.set_pv_value(f"{POSITION}:SP", "Filter 2")
         self.ca.assert_that_pv_is(f'{POSITION}:SP.RVAL', 2)
         self.ca.assert_that_pv_is_number(f'{POSITION}.RVAL', 2, 0, timeout=5)
 
